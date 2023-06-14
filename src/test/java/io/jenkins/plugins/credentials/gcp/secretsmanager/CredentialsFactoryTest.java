@@ -125,6 +125,34 @@ public class CredentialsFactoryTest {
   }
 
   @Test
+  public void shouldGetJsonUsernamePasswordCredentials() {
+    Map<String, String> labels = new HashMap<>();
+    labels.put(Labels.TYPE, Type.JSON_USERNAME_PASSWORD);
+
+    final SecretGetter mockSecretGetter = new SecretGetter() {
+      @Override
+      public String getSecretString(String id) {
+        // return "hunter2";
+        return "{username:uname,password:pswrd}";
+      }
+
+      @Override
+      public byte[] getSecretBytes(String id) {
+        return new byte[0];
+      }
+    };
+
+    Optional<StandardCredentials> credential = CredentialsFactory.create("foo", "project", labels, mockSecretGetter);
+
+    assertThat(credential).isNotEmpty();
+    assertThat(credential.get()).isInstanceOf(GcpJsonUsernamePasswordCredentials.class);
+
+    final GcpJsonUsernamePasswordCredentials gcpCredential = ((GcpJsonUsernamePasswordCredentials) credential.get());
+    assertThat(gcpCredential.getUsername()).isEqualTo("uname");
+    assertThat(gcpCredential.getPassword().getPlainText()).isEqualTo("pswrd");
+  }
+
+  @Test
   public void shouldGetSshUserPrivateKeyCredentials() {
     // Fake key generated with:
     // ssh-keygen -t rsa -m PEM
