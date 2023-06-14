@@ -132,8 +132,7 @@ public class CredentialsFactoryTest {
     final SecretGetter mockSecretGetter = new SecretGetter() {
       @Override
       public String getSecretString(String id) {
-        // return "hunter2";
-        return "{username:uname,password:pswrd}";
+        return "{\"username\":\"uname\",\"password\":\"pswrd\"}";
       }
 
       @Override
