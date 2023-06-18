@@ -7,11 +7,15 @@ import com.cloudbees.plugins.credentials.impl.BaseStandardCredentials;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
+//import logging
+import java.util.logging.Logger;
 
 import hudson.util.Secret;
 
 public class GcpJsonUsernamePasswordCredentials extends BaseStandardCredentials
         implements StandardUsernamePasswordCredentials {
+
+    private static final Logger LOGGER = Logger.getLogger(GcpJsonUsernamePasswordCredentials.class.getName());
 
     private final Supplier<Secret> jsonSecret;
     private final String username;
@@ -22,7 +26,7 @@ public class GcpJsonUsernamePasswordCredentials extends BaseStandardCredentials
         this.jsonSecret = jsonSecret;
         this.username = parseUsernamePassword(jsonSecret)[0];
         this.password = parseUsernamePassword(jsonSecret)[1];
-
+        LOGGER.info("GcpJsonUsernamePasswordCredentials constructor called");
     }
 
     // function to parse Json string and return username and password
@@ -36,6 +40,8 @@ public class GcpJsonUsernamePasswordCredentials extends BaseStandardCredentials
             Map<String, Object> map = mapper.readValue(json, Map.class);
             usernamePassword[0] = map.get("username").toString();
             usernamePassword[1] = map.get("password").toString();
+            LOGGER.info("username = " + usernamePassword[0]);
+            LOGGER.info("Password = " + usernamePassword[1]);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
