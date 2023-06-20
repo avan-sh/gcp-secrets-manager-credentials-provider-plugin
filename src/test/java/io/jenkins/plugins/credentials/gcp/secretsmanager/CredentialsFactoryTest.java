@@ -102,28 +102,31 @@ public class CredentialsFactoryTest {
     labels.put(Labels.TYPE, Type.USERNAME_PASSWORD);
     labels.put(Labels.USERNAME, "taylor");
 
-    final SecretGetter mockSecretGetter = new SecretGetter() {
-      @Override
-      public String getSecretString(String id) {
-        return "hunter2";
-      }
+    final SecretGetter mockSecretGetter =
+      new SecretGetter() {
+        @Override
+        public String getSecretString(String id) {
+          return "hunter2";
+        }
 
-      @Override
-      public byte[] getSecretBytes(String id) {
-        return new byte[0];
-      }
+        @Override
+        public byte[] getSecretBytes(String id) {
+          return new byte[0];
+        }
     };
 
-    Optional<StandardCredentials> credential = CredentialsFactory.create("foo", "project", labels, mockSecretGetter);
+    Optional<StandardCredentials> credential =
+      CredentialsFactory.create("foo", "project", labels, mockSecretGetter);
 
-  assertThat(credential).isNotEmpty();
-  assertThat(credential.get()).isInstanceOf(GcpUsernamePasswordCredentials.class);
+    assertThat(credential).isNotEmpty();
+    assertThat(credential.get()).isInstanceOf(GcpUsernamePasswordCredentials.class);
 
-  final GcpUsernamePasswordCredentials gcpCredential = ((GcpUsernamePasswordCredentials) credential.get());
-  assertThat(gcpCredential.getUsername()).isEqualTo("abcdef");
-  assertThat(gcpCredential.getPassword().getPlainText()).isEqualTo("hunter2");
+    final GcpUsernamePasswordCredentials gcpCredential =
+      ((GcpUsernamePasswordCredentials) credential.get());
+    assertThat(gcpCredential.getUsername()).isEqualTo("taylor");
+    assertThat(gcpCredential.getPassword().getPlainText()).isEqualTo("hunter2");
   }
-
+  
   @Test
   public void shouldGetJsonUsernamePasswordCredentials() {
     Map<String, String> labels = new HashMap<>();
