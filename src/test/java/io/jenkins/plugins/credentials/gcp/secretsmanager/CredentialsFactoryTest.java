@@ -113,16 +113,16 @@ public class CredentialsFactoryTest {
           public byte[] getSecretBytes(String id) {
             return new byte[0];
           }
-      };
+        };
 
     Optional<StandardCredentials> credential =
-      CredentialsFactory.create("foo", "project", labels, mockSecretGetter);
+        CredentialsFactory.create("foo", "project", labels, mockSecretGetter);
 
     assertThat(credential).isNotEmpty();
     assertThat(credential.get()).isInstanceOf(GcpUsernamePasswordCredentials.class);
 
     final GcpUsernamePasswordCredentials gcpCredential =
-      ((GcpUsernamePasswordCredentials) credential.get());
+        ((GcpUsernamePasswordCredentials) credential.get());
     assertThat(gcpCredential.getUsername()).isEqualTo("taylor");
     assertThat(gcpCredential.getPassword().getPlainText()).isEqualTo("hunter2");
   }
