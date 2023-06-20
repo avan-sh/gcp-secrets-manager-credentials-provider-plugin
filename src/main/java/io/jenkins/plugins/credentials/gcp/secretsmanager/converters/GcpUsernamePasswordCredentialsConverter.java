@@ -21,8 +21,7 @@ public class GcpUsernamePasswordCredentialsConverter extends GcpCredentialsConve
   @Override
   public BaseStandardCredentials resolve(
       String name, String description, Map<String, String> labels, SecretGetter secretGetter) {
-    // final String username = labels.getOrDefault(Labels.USERNAME, "abcdef");
-    final String username = "abcdef";
+    final String username = labels.getOrDefault(Labels.USERNAME, "");
 
     return new GcpUsernamePasswordCredentials(
         name, description, new SecretSupplier(name, secretGetter), username);
