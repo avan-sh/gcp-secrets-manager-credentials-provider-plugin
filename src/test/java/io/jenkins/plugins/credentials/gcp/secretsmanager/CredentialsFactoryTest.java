@@ -103,17 +103,17 @@ public class CredentialsFactoryTest {
     labels.put(Labels.USERNAME, "taylor");
 
     final SecretGetter mockSecretGetter =
-      new SecretGetter() {
-        @Override
-        public String getSecretString(String id) {
-          return "hunter2";
-        }
+        new SecretGetter() {
+          @Override
+          public String getSecretString(String id) {
+            return "hunter2";
+          }
 
-        @Override
-        public byte[] getSecretBytes(String id) {
-          return new byte[0];
-        }
-    };
+          @Override
+          public byte[] getSecretBytes(String id) {
+            return new byte[0];
+          }
+      };
 
     Optional<StandardCredentials> credential =
       CredentialsFactory.create("foo", "project", labels, mockSecretGetter);
