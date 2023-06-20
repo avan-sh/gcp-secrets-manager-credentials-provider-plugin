@@ -13,7 +13,7 @@
 
     <groupId>io.jenkins.plugins</groupId>
     <artifactId>gcp-secrets-manager-credentials-provider</artifactId>
-    <version>0.3.2-logging</version>
+    <version>0.3.2-forked</version>
     <packaging>hpi</packaging>
 
     <name>GCP Secrets Manager Credentials Provider</name>
