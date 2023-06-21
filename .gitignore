@@ -30,3 +30,4 @@ target
 work
 *.releaseBackup
 release.properties
+.vscode
