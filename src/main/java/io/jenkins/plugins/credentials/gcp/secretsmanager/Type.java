@@ -8,4 +8,5 @@ public class Type {
   public static final String USERNAME_PASSWORD = "username-password";
   public static final String JSON_USERNAME_PASSWORD = "json-username-password";
   public static final String SSH_USER_PRIVATE_KEY = "ssh-user-private-key";
+  public static final String AZURE = "azure";
 }
